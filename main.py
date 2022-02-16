@@ -16,10 +16,12 @@ except:
     auction_cache = get_data()
     pickle.dump(auction_cache, open("cache", "wb"))
 try:
-    auction_tweet_id = pickle.load(open("tweet_id", "rb"))
+    auction_tweet_id = pickle.load(open("last_tweet", "rb"))
 except:
     print("no tweet_id")
     auction_tweet_id = handle_new_auction(auction_cache)
+    pickle.dump(auction_tweet_id, open("last_tweet", "wb"))
+
 
 if __name__ == "__main__":
     while True:
@@ -33,13 +35,13 @@ if __name__ == "__main__":
             pickle.dump(auction_cache, open("cache", "wb"))
             pickle.dump(auction_tweet_id, open("last_tweet", "wb"))
             print("new auction started")
-            
 
 
 
-        elif last_auction_data['bid_id'] > auction_cache['bid_id']:
-            auction_tweet_id = handle_new_bid(auction_cache, auction_tweet_id._json['id_str'])
+
+        elif last_auction_data['bid_id'] != auction_cache['bid_id']:
             auction_cache = last_auction_data
+            auction_tweet_id = handle_new_bid(auction_cache, auction_tweet_id._json['id_str'])
             pickle.dump(auction_cache, open("cache", "wb"))
             pickle.dump(auction_tweet_id, open("last_tweet", "wb"))
             print("new bid")
