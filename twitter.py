@@ -19,9 +19,9 @@ def handle_new_auction(auction_data):
 
 def handle_new_bid(auction_data, tweet_id):
     text = f"FLOOR {auction_data['id']} has received a bid of Ξ{auction_data['amount']} from {auction_data['bidder']}\nCheck his members pass: {auction_data['memberspass']}"
-    api.update_status(status=text, in_reply_to_status_id=tweet_id)
+    return api.update_status(status=text, in_reply_to_status_id=tweet_id)
 
 
 def handle_auction_end(tweet_id):
     text = "This auction is ending soon! Bid now at https://app.museumofcryptoart.com/floor-auction"
-    api.update_status(status=text, in_reply_to_status_id=tweet_id)
+    return api.update_status(status=text, in_reply_to_status_id=tweet_id)
